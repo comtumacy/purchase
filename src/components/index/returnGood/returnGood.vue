@@ -148,7 +148,7 @@ export default {
   components: {
     returnAlert
   },
-  props: ['contentWidth', 'contentHeight', 'widthNow', 'heightNow'],
+  props: ['contentWidth', 'contentHeight', 'widthNow', 'heightNow', 'searchSelect', 'searchInput'],
   created () {
     this.getContent()
   },
@@ -162,15 +162,21 @@ export default {
       pageSize: 10,
       value: '退货记录',
       input: '退货记录',
-      searchInput: '',
       dataSign: 1
     }
   },
   computed: {},
   watch: {
-    // value () {
-    //   this.getContent()
-    // }
+    searchSelect: {
+      handler: function (newValue) {
+        if (newValue === '退货') {
+          setTimeout(() => {
+            this.search()
+          }, 500)
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     getContent () {
@@ -257,13 +263,13 @@ export default {
       } else {
         this.$axios({
           method: 'post',
-          url: `/v1/search/searchSalesReturn`,
+          url: `/v1/search/searchSalesReturn/${this.pageNow}/${this.pageSize}`,
           auth: {
             username: this.$store.getters.token_getters,
             password: ''
           },
           data: {
-            'q': '背心'
+            'q': this.searchInput
           }
         }).then(res => {
           this.data = res.data.content

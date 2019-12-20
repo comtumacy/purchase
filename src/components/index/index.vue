@@ -38,9 +38,17 @@
             <i class="icon-coin-yen"></i>
             <span slot="title">收支</span>
           </el-menu-item>
+          <el-menu-item index="adminSign">
+            <i class="icon-users"></i>
+            <span slot="title">用户</span>
+          </el-menu-item>
         </el-menu>
       </div>
-      <indexHeaders v-bind:widthNow="widthNow"></indexHeaders>
+      <indexHeaders
+        v-bind:widthNow="widthNow"
+        @searchSentSelect="searchGetSelect"
+        @searchSentInput="searchGetInput">
+      </indexHeaders>
       <div class="content" v-bind:style="{'width': contentWidth + 'px'}">
         <Tabs
           type="card"
@@ -60,28 +68,36 @@
               v-bind:contentWidth="contentWidth"
               v-bind:contentHeight="contentHeight"
               v-bind:widthNow="widthNow"
-              v-bind:heightNow="heightNow"></stock>
+              v-bind:heightNow="heightNow"
+              v-bind:searchSelect="searchSelect"
+              v-bind:searchInput="searchInput"></stock>
           </TabPane>
           <TabPane label="进货" v-if="stockPurchaseSign" name="stockPurchaseSign" v-bind:style="{'height': contentHeight + 'px'}">
             <stockPurchase
               v-bind:contentWidth="contentWidth"
               v-bind:contentHeight="contentHeight"
               v-bind:widthNow="widthNow"
-              v-bind:heightNow="heightNow"></stockPurchase>
+              v-bind:heightNow="heightNow"
+              v-bind:searchSelect="searchSelect"
+              v-bind:searchInput="searchInput"></stockPurchase>
           </TabPane>
           <TabPane label="销售" v-if="saleSign" name="saleSign" v-bind:style="{'height': contentHeight + 'px'}">
             <sale
               v-bind:contentWidth="contentWidth"
               v-bind:contentHeight="contentHeight"
               v-bind:widthNow="widthNow"
-              v-bind:heightNow="heightNow"></sale>
+              v-bind:heightNow="heightNow"
+              v-bind:searchSelect="searchSelect"
+              v-bind:searchInput="searchInput"></sale>
           </TabPane>
           <TabPane label="退货" v-if="returnGoodSign" name="returnGoodSign" v-bind:style="{'height': contentHeight + 'px'}">
             <returnGood
               v-bind:contentWidth="contentWidth"
               v-bind:contentHeight="contentHeight"
               v-bind:widthNow="widthNow"
-              v-bind:heightNow="heightNow"></returnGood>
+              v-bind:heightNow="heightNow"
+              v-bind:searchSelect="searchSelect"
+              v-bind:searchInput="searchInput"></returnGood>
           </TabPane>
           <TabPane label="收支" v-if="profitSign" name="profitSign" v-bind:style="{'height': contentHeight + 'px'}">
             <profit
@@ -89,6 +105,15 @@
               v-bind:contentHeight="contentHeight"
               v-bind:widthNow="widthNow"
               v-bind:heightNow="heightNow"></profit>
+          </TabPane>
+          <TabPane label="用户" v-if="adminSign" name="adminSign" v-bind:style="{'height': contentHeight + 'px'}">
+            <admin
+              v-bind:contentWidth="contentWidth"
+              v-bind:contentHeight="contentHeight"
+              v-bind:widthNow="widthNow"
+              v-bind:heightNow="heightNow"
+              v-bind:searchSelect="searchSelect"
+              v-bind:searchInput="searchInput"></admin>
           </TabPane>
         </Tabs>
       </div>
@@ -103,6 +128,7 @@ import stockPurchase from './stockPurchase/stockPurchase'
 import sale from './sale/sale'
 import returnGood from './returnGood/returnGood'
 import profit from './profit/profit'
+import admin from './admin/admin'
 export default {
   name: 'index',
   components: {
@@ -112,7 +138,8 @@ export default {
     stockPurchase,
     sale,
     returnGood,
-    profit
+    profit,
+    admin
   },
   props: [],
   created () {
@@ -125,6 +152,8 @@ export default {
       heightNow: 0,
       contentWidth: 0,
       contentHeight: 0,
+      searchSelect: '',
+      searchInput: '',
       loading: false,
       tabValue: 'indexChildSign',
       indexChildSign: true,
@@ -132,7 +161,8 @@ export default {
       stockPurchaseSign: false,
       saleSign: false,
       returnGoodSign: false,
-      profitSign: false
+      profitSign: false,
+      adminSign: false
     }
   },
   computed: {},
@@ -168,6 +198,16 @@ export default {
         this.returnGoodSign = true
       } else if (index === 'profitSign') {
         this.profitSign = true
+      } else if (index === 'adminSign') {
+        if (this.$store.getters.isSuper_getters === 1) {
+          this.$alert('抱歉，管理员才能进入用户管理页面', '提示', {
+            confirmButtonText: '确定',
+            callback: () => {
+            }
+          })
+        } else {
+          this.adminSign = true
+        }
       }
     },
     getLogo () {
@@ -186,7 +226,26 @@ export default {
         this.returnGoodSign = false
       } else if (index === 'profitSign') {
         this.profitSign = false
+      } else if (index === 'adminSign') {
+        this.adminSign = false
       }
+    },
+    searchGetSelect (val) {
+      this.searchSelect = val
+      if (val === '库存') {
+        this.selectMenu('stockSign')
+      } else if (val === '进货') {
+        this.selectMenu('stockPurchaseSign')
+      } else if (val === '销售') {
+        this.selectMenu('saleSign')
+      } else if (val === '退货') {
+        this.selectMenu('profitSign')
+      } else if (val === '用户') {
+        this.selectMenu('adminSign')
+      }
+    },
+    searchGetInput (val) {
+      this.searchInput = val
     }
   },
   mounted () {

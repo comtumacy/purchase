@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const state = {
   token: 'null',
   username: '',
-  isSuper: ''
+  isSuper: '',
+  account: ''
 }
 
 const getters = {
@@ -46,6 +47,18 @@ const getters = {
     } else {
       return state.isSuper
     }
+  },
+  account_getters (state) {
+    if (state.account === '') {
+      if (sessionStorage.getItem('account') === '') {
+        return '无'
+      } else {
+        state.account = sessionStorage.getItem('account')
+        return sessionStorage.getItem('account')
+      }
+    } else {
+      return state.account
+    }
   }
 }
 
@@ -61,6 +74,10 @@ const mutations = {
   isSuper_mutations (state, isSuper) {
     sessionStorage.setItem('isSuper', isSuper)
     state.isSuper = isSuper
+  },
+  account_mutations (state, account) {
+    sessionStorage.setItem('account', account)
+    state.account = account
   }
 }
 
@@ -73,6 +90,9 @@ const actions = {
   },
   isSuper_actions (context, isSuper) {
     context.commit('isSuper_mutations', isSuper)
+  },
+  account_actions (context, account) {
+    context.commit('account_mutations', account)
   }
 }
 

@@ -27,8 +27,8 @@
           <el-input v-model="ruleForm.place" placeholder="请输入存储仓库"></el-input>
         </el-form-item>
         <el-form-item class="button">
-          <el-button class="button1" type="success" v-on:click="onSubmit('ruleForm')" v-bind:style="{'width': '180px'}">添加</el-button>
-          <el-button class="button2" type="info" v-on:click="$emit('closeAndEdit')" v-bind:style="{'width': '180px'}">取消</el-button>
+          <el-button class="button1" type="success" v-on:click="onSubmit('ruleForm')" v-bind:style="{'width': '220px'}">添加</el-button>
+          <el-button class="button2" type="info" v-on:click="$emit('closeAndEdit')" v-bind:style="{'width': '220px'}">取消</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -185,5 +185,5 @@ export default {
         width 375px
     .button
       display block
-      margin-left 90px
+      margin-left 20px
 </style>

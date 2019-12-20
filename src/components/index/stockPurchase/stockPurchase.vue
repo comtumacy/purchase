@@ -143,7 +143,7 @@ export default {
   components: {
     purchaseAlert
   },
-  props: ['contentWidth', 'contentHeight', 'widthNow', 'heightNow'],
+  props: ['contentWidth', 'contentHeight', 'widthNow', 'heightNow', 'searchSelect', 'searchInput'],
   created () {
     this.getContent()
   },
@@ -167,7 +167,6 @@ export default {
       }],
       value: '/v1/spending/showSpending',
       input: '进货记录',
-      searchInput: '',
       dataSign: 1
     }
   },
@@ -175,6 +174,17 @@ export default {
   watch: {
     value () {
       this.getContent()
+    },
+    searchSelect: {
+      handler: function (newValue) {
+        if (newValue === '进货') {
+          console.log(1)
+          setTimeout(() => {
+            this.search()
+          }, 500)
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -262,13 +272,13 @@ export default {
       } else {
         this.$axios({
           method: 'post',
-          url: `/v1/search/spending`,
+          url: `/v1/search/spending/${this.pageNow}/${this.pageSize}`,
           auth: {
             username: this.$store.getters.token_getters,
             password: ''
           },
           data: {
-            'q': '背心'
+            'q': this.searchInput
           }
         }).then(res => {
           this.data = res.data.content

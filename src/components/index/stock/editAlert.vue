@@ -1,16 +1,16 @@
 <template>
-    <div class="editAlert" v-bind:style="{'top': (height / 2) + 'px', 'left': (width / 2) + 'px'}" v-loading="loading">
-      <i>请输入需要修改的价格内容</i>
-      <el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-form-inline">
-        <el-form-item label="价格内容：" prop="content">
-          <el-input v-model="ruleForm.content" placeholder="请输入商品的价格进行修改"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button class="button1" type="success" v-on:click="onSubmit('ruleForm')">修改</el-button>
-          <el-button class="button2" type="info" v-on:click="$emit('closeAndEdit')">取消</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+  <div class="editAlert" v-bind:style="{'top': (height / 2) + 'px', 'left': (width / 2) + 'px'}" v-loading="loading">
+    <i>请输入需要修改的价格内容</i>
+    <el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-form-inline">
+      <el-form-item label="价格内容：" prop="content">
+        <el-input v-model="ruleForm.content" placeholder="请输入商品的价格进行修改"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button class="button1" type="success" v-on:click="onSubmit('ruleForm')">修改</el-button>
+        <el-button class="button2" type="info" v-on:click="$emit('closeAndEdit')">取消</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>

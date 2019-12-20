@@ -7,7 +7,7 @@ import store from './store/store'
 import axIos from 'axios'
 import './http/http'
 import 'view-design/dist/styles/iview.css'
-import { Icon, Button, Row, Col, Form, FormItem, Input, InputNumber, MessageBox, Message, Menu, Submenu, MenuItem, MenuItemGroup, Select, Option, Loading, Table, TableColumn, Pagination, Popover } from 'element-ui'
+import { Icon, Button, Row, Col, Form, FormItem, Input, InputNumber, MessageBox, Message, Menu, Submenu, MenuItem, MenuItemGroup, Select, Option, Loading, Table, TableColumn, Pagination, Popover, Dialog, Drawer } from 'element-ui'
 import { Tabs, TabPane } from 'view-design'
 import echarts from 'echarts'
 
@@ -40,6 +40,8 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
 Vue.use(Popover)
+Vue.use(Dialog)
+Vue.use(Drawer)
 //  iView UI
 Vue.component('Tabs', Tabs)
 Vue.component('TabPane', TabPane)
