@@ -156,6 +156,7 @@ export default {
   },
   computed: {},
   watch: {
+    // 监听当前宽度，动态控制三个组件的宽度
     widthNow () {
       this.selectWidthSet()
       this.userWidthSet()
@@ -163,6 +164,7 @@ export default {
     }
   },
   methods: {
+    // 全局搜索组件，往外父组件传值，父组件控制子页面打开，传搜索值进入子页面的子组件，并控制子页面的搜索函数进行搜索获取数据
     search () {
       if (this.select === '') {
         this.$message.error('请选择搜索类型')
@@ -173,13 +175,16 @@ export default {
         this.$emit('searchSentInput', this.input)
       }
     },
+    // 从vuex获取昵称
     getUser () {
       return this.$store.getters.username_getters
     },
+    // 退出登录，清空vuex的token
     outLogin () {
       this.$store.dispatch('token_actions', 'null')
       this.$router.push('/login')
     },
+    // 动态控制宽度
     selectWidthSet () {
       if (this.widthNow < 1715) {
         this.selectLeft = 350
@@ -187,6 +192,7 @@ export default {
         this.selectLeft = 0.4687 * this.widthNow
       }
     },
+    // 动态控制宽度
     userWidthSet () {
       if (this.widthNow < 1715) {
         this.userLeft = 900
@@ -194,6 +200,7 @@ export default {
         this.userLeft = 0.7873 * this.widthNow
       }
     },
+    //
     buttonWidthSet () {
       if (this.widthNow < 1715) {
         this.buttonLeft = 1050
@@ -201,6 +208,7 @@ export default {
         this.buttonLeft = 0.8776 * this.widthNow
       }
     },
+    // 动态控制宽度
     changeDrawerTitle (val) {
       if (val === 1) {
         this.ruleFromSign = 1
@@ -212,9 +220,11 @@ export default {
       this.dialogVisible = false
       this.drawerSign = true
     },
+    // 关闭侧边框控制
     drawerClose () {
       this.drawerSign = false
     },
+    // 更改昵称
     onSubmit1 (ruleForm1) {
       this.$refs[ruleForm1].validate((valid) => {
         if (valid) {
@@ -251,6 +261,7 @@ export default {
         }
       })
     },
+    // 更改密码
     onSubmit2 (ruleForm2) {
       this.$refs[ruleForm2].validate((valid) => {
         if (valid) {
@@ -290,6 +301,7 @@ export default {
         }
       })
     },
+    // 获取邮箱的验证码
     getCode () {
       if (this.ruleForm2.password === '') {
         this.$message.error('请输入新密码之后再获取验证码')

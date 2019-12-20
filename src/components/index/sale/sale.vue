@@ -183,6 +183,7 @@ export default {
     value () {
       this.getContent()
     },
+    // 监听对象未发生变化前就执行一遍，调用搜索函数
     searchSelect: {
       handler: function (newValue) {
         if (newValue === '销售') {
@@ -205,13 +206,13 @@ export default {
           password: ''
         }
       }).then(res => {
-        console.log(res)
         this.data = res.data.content
         this.pageAllNumber = res.data.pageInfo.allPageNumber * this.pageSize
         this.loading = false
         this.dataSign = 1
       })
     },
+    // 编辑框打开，根据类型不同获取不同的数据
     handleEdit () {
       this.saleSign = true
       if (this.dataSign === 1) {
@@ -220,6 +221,7 @@ export default {
         this.search()
       }
     },
+    // 关闭编辑框不做更改
     closeAndSale () {
       this.saleSign = false
       if (this.dataSign === 1) {
@@ -228,6 +230,7 @@ export default {
         this.search()
       }
     },
+    // 关闭编辑框并获取新数据刷新页面，根据当前的数据类型刷新
     closeAndSaleSucceed () {
       this.saleSign = false
       if (this.dataSign === 1) {
@@ -236,6 +239,7 @@ export default {
         this.search()
       }
     },
+    // 删除
     handleDelete (val) {
       this.$confirm('是否删除该商品, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -267,14 +271,17 @@ export default {
         })
       })
     },
+    // 控制翻页获取新页数据，根据数据类型获取
     handleCurrentChange (val) {
       this.pageNow = val
       this.getContent()
     },
+    // 控制每页个数，根据数据类型获取
     handleSizeChange (val) {
       this.pageSize = val
       this.getContent()
     },
+    // 搜索
     search () {
       this.loading = true
       if (this.searchInput === '') {

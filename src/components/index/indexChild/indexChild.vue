@@ -9,8 +9,8 @@
         content="点击查看销售品牌报表"
         class="popover1">
         <div class="content1" v-bind:style="{'left': '70px'}" slot="reference" v-on:click="clickChangeDraw(0)">
-          <span class="title1">库存数量</span>
-          <span class="title2">4</span>
+          <span class="title1">查看报表</span>
+          <span class="title2">销售品牌报表</span>
         </div>
       </el-popover>
       <el-popover
@@ -21,8 +21,8 @@
         content="点击查看销售名称报表"
         class="popover2">
         <div class="content2" v-bind:style="{'left': '500px'}" slot="reference" v-on:click="clickChangeDraw(1)">
-          <span class="title1">进货数量</span>
-          <span class="title2">12</span>
+          <span class="title1">查看报表</span>
+          <span class="title2">销售名称报表</span>
         </div>
       </el-popover>
       <el-popover
@@ -33,8 +33,8 @@
         content="点击查看进货品牌报表"
         class="popover3">
         <div class="content3" v-bind:style="{'left': '930px'}" slot="reference" v-on:click="clickChangeDraw(2)">
-          <span class="title1">销售数量</span>
-          <span class="title2">24</span>
+          <span class="title1">查看报表</span>
+          <span class="title2">进货品牌报表</span>
         </div>
       </el-popover>
       <el-popover
@@ -45,8 +45,8 @@
         content="点击查看进货名称报表"
         class="popover4">
         <div class="content4" v-bind:style="{'left': '1360px'}" slot="reference" v-on:click="clickChangeDraw(3)">
-          <span class="title1">退货数量</span>
-          <span class="title2">24</span>
+          <span class="title1">查看报表</span>
+          <span class="title2">进货名称报表</span>
         </div>
       </el-popover>
       <div class="chart1" ref="chart1"></div>
@@ -74,31 +74,35 @@ export default {
       data1: [],
       data2: [],
       legend1: [
-        ['', '本月销售数量'],
-        ['', '本月销售数量'],
-        ['', '本月进货数量'],
-        ['', '本月进货数量']
+        ['', '本月数量（件）'],
+        ['', '本月数量（件）'],
+        ['', '本月数量（件）'],
+        ['', '本月数量（件）']
       ],
       legend2: [
-        ['', '上月销售数量'],
-        ['', '上月销售数量'],
-        ['', '上月进货数量'],
-        ['', '上月进货数量']
+        ['', '上月数量（件）'],
+        ['', '上月数量（件）'],
+        ['', '上月数量（件）'],
+        ['', '上月数量（件）']
       ],
-      title1: ['本月销售品牌报表', '本月销售名称报表', '本月进货品牌报表', '本月进货名称报表'],
-      title2: ['上月销售品牌报表', '上月销售名称报表', '上月进货品牌报表', '上月进货名称报表']
+      val: 0
     }
   },
   computed: {},
   watch: {
+    // 监听data1数据并重绘图1
     data1 () {
-      this.drawLine1()
+      let val = this.val
+      this.drawLine1(val)
     },
+    // 监听data2数据并重绘图2
     data2 () {
-      this.drawLine2()
+      let val = this.val
+      this.drawLine2(val)
     }
   },
   methods: {
+    // 获取图1数据
     getContent1 (val) {
       // this.loading = true
       this.$axios({
@@ -116,6 +120,7 @@ export default {
         // this.loading = false
       })
     },
+    // 获取图2数据
     getContent2 (val) {
       this.$axios({
         method: 'get',
@@ -132,7 +137,9 @@ export default {
         // this.loading = false
       })
     },
-    drawLine1 () {
+    // 绘制图1
+    drawLine1 (val) {
+      let title1 = ['本月销售品牌报表', '本月销售名称报表', '本月进货品牌报表', '本月进货名称报表']
       if (this.$refs.chart1) {
         let myChart = this.$echarts.init(this.$refs.chart1)
         // 绘制图表
@@ -150,7 +157,7 @@ export default {
             top: 10,
             left: 10,
             show: true,
-            text: '本月销售统计报表',
+            text: title1[val],
             textStyle: {
               fontSize: 25
             }
@@ -177,8 +184,9 @@ export default {
             { type: 'bar',
               itemStyle: {
                 normal: {
-                  color: function () {
-                    return '#' + Math.floor(Math.random() * (256 * 256 * 256 - 1)).toString(16)
+                  color: function (params) {
+                    let colorList = [ '#C33531', '#EFE42A', '#64BD3D', '#EE9201', '#29AAE3', '#B74AE5', '#0AAF9F', '#E89589', '#16A085', '#4A235A', '#C39BD3 ', '#F9E79F', '#BA4A00', '#ECF0F1', '#616A6B', '#EAF2F8', '#4A235A', '#3498DB' ]
+                    return colorList[params.dataIndex]
                   }
                 }
               }
@@ -187,7 +195,9 @@ export default {
         })
       }
     },
-    drawLine2 () {
+    // 绘制图2
+    drawLine2 (val) {
+      let title2 = ['上月销售品牌报表', '上月销售名称报表', '上月进货品牌报表', '上月进货名称报表']
       if (this.$refs.chart2) {
         let myChart = this.$echarts.init(this.$refs.chart2)
         // 绘制图表
@@ -205,7 +215,7 @@ export default {
             left: 10,
             top: 10,
             show: true,
-            text: '上月销售统计报表',
+            text: title2[val],
             textStyle: {
               fontSize: 25
             }
@@ -233,8 +243,9 @@ export default {
               type: 'bar',
               itemStyle: {
                 normal: {
-                  color: function () {
-                    return '#' + Math.floor(Math.random() * (256 * 256 * 256 - 1)).toString(16)
+                  color: function (params) {
+                    let colorList = [ '#C33531', '#EFE42A', '#64BD3D', '#EE9201', '#29AAE3', '#B74AE5', '#0AAF9F', '#E89589', '#16A085', '#4A235A', '#C39BD3 ', '#F9E79F', '#BA4A00', '#ECF0F1', '#616A6B', '#EAF2F8', '#4A235A', '#3498DB' ]
+                    return colorList[params.dataIndex]
                   }
                 }
               }
@@ -243,7 +254,9 @@ export default {
         })
       }
     },
+    // 点击切换图数据，清空data数据并加装新数据，再绘图
     clickChangeDraw (val) {
+      this.val = val
       for (let i = this.data1.length - 1; i >= 0; i--) {
         this.$delete(this.data1, i)
       }
@@ -257,11 +270,13 @@ export default {
     }
   },
   mounted () {
+    // 挂载点：异步加载绘制图
+    let val = this.val
     this.$nextTick(() => {
-      this.drawLine1()
+      this.drawLine1(val)
     })
     this.$nextTick(() => {
-      this.drawLine2()
+      this.drawLine2(val)
     })
   },
   updated () {
@@ -307,7 +322,7 @@ export default {
         .title2
           position absolute
           top 50px
-          left 165px
+          left 55px
           font-size 40px
           color white
     .popover2
@@ -333,7 +348,7 @@ export default {
         .title2
           position absolute
           top 50px
-          left 160px
+          left 55px
           font-size 40px
           color white
     .popover3
@@ -359,7 +374,7 @@ export default {
         .title2
           position absolute
           top 50px
-          left 160px
+          left 55px
           font-size 40px
           color white
     .popover4
@@ -385,7 +400,7 @@ export default {
         .title2
           position absolute
           top 50px
-          left 160px
+          left 55px
           font-size 40px
           color white
     .chart1

@@ -53,6 +53,7 @@ export default {
   components: {},
   props: ['contentWidth', 'contentHeight', 'widthNow', 'heightNow'],
   created () {
+    // eCharts的图均需初始化渲染DOM节点
     this.drawPieToday()
     this.drawPieYesterday()
     this.drawPieThisMonth()
@@ -60,6 +61,7 @@ export default {
     this.getContent()
   },
   data () {
+    // 图标与统计的数据
     return {
       todayProfit: 0,
       todayExpenditure: 0,
@@ -78,6 +80,7 @@ export default {
   },
   computed: {},
   watch: {
+    // 以下均为使用空值渲染图表，等待data的数据更新再重新绘图
     todayProfit () {
       this.drawPieToday()
     },
@@ -104,6 +107,7 @@ export default {
     }
   },
   methods: {
+    // 获取数据
     getContent () {
       // today1
       this.$axios({
@@ -275,6 +279,7 @@ export default {
         }
       })
     },
+    // 以下为绘制图
     drawPieToday () {
       if (this.$refs.chart1) {
         let myChart = this.$echarts.init(this.$refs.chart1)
@@ -425,6 +430,7 @@ export default {
     }
   },
   mounted () {
+    // 挂载点
     this.$nextTick(() => {
       this.drawPieToday()
       this.drawPieYesterday()
@@ -438,6 +444,7 @@ export default {
   },
   destroyed () {
   },
+  // 自定义指令，用于动态控制不同的数值下的显示均居中效果
   directives: {
     setPosition: {
       inserted: function (el) {

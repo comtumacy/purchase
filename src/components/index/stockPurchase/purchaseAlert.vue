@@ -87,6 +87,7 @@ export default {
   },
   computed: {},
   watch: {
+    // 动态控制元素位置
     contentWidth () {
       this.getLength()
     },
@@ -95,6 +96,7 @@ export default {
     }
   },
   methods: {
+    // 提交按钮事件
     onSubmit (ruleForm) {
       this.$refs[ruleForm].validate((valid, field) => {
         if (valid) {
@@ -133,6 +135,7 @@ export default {
         }
       })
     },
+    // 动态布局
     getLength () {
       let width
       if (this.contentWidth < 580) {

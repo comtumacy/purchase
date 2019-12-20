@@ -10,6 +10,7 @@ export default {
   components: {},
   props: [],
   created () {
+    // 初始化
     this.goToIndex()
   },
   data () {
@@ -18,9 +19,11 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    // 404图片定位
     img () {
       return require('./404.jpg')
     },
+    // 控制路由跳转主页
     goToIndex () {
       this.$message.error('即将跳转回首页')
       setTimeout(() => {

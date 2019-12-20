@@ -167,6 +167,7 @@ export default {
   },
   computed: {},
   watch: {
+    // 监听对象未发生变化前就执行一遍，调用搜索函数
     searchSelect: {
       handler: function (newValue) {
         if (newValue === '退货') {
@@ -179,6 +180,7 @@ export default {
     }
   },
   methods: {
+    // 获取内容
     getContent () {
       this.loading = true
       this.$axios({
@@ -195,12 +197,15 @@ export default {
         this.dataSign = 1
       })
     },
+    // 编辑框打开
     handleEdit () {
       this.returnSign = true
     },
+    // 编辑框关闭
     closeAndReturn () {
       this.returnSign = false
     },
+    // 关闭编辑框并获取新数据刷新页面，根据当前的数据类型刷新
     closeAndReturnSucceed () {
       this.returnSign = false
       if (this.dataSign === 1) {
@@ -209,6 +214,7 @@ export default {
         this.search()
       }
     },
+    // 删除
     handleDelete (val) {
       this.$confirm('是否删除该商品, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -240,6 +246,7 @@ export default {
         })
       })
     },
+    // 控制翻页获取新页数据，根据数据类型获取
     handleCurrentChange (val) {
       this.pageNow = val
       if (this.dataSign === 1) {
@@ -248,6 +255,7 @@ export default {
         this.search()
       }
     },
+    // 控制每页个数，根据数据类型获取
     handleSizeChange (val) {
       this.pageSize = val
       if (this.dataSign === 1) {
@@ -256,6 +264,7 @@ export default {
         this.search()
       }
     },
+    // 搜索
     search () {
       this.loading = true
       if (this.searchInput === '') {
