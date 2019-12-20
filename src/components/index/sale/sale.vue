@@ -205,7 +205,6 @@ export default {
           password: ''
         }
       }).then(res => {
-        console.log(res)
         this.data = res.data.content
         this.pageAllNumber = res.data.pageInfo.allPageNumber * this.pageSize
         this.loading = false

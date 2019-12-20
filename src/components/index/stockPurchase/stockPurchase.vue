@@ -178,7 +178,6 @@ export default {
     searchSelect: {
       handler: function (newValue) {
         if (newValue === '进货') {
-          console.log(1)
           setTimeout(() => {
             this.search()
           }, 500)

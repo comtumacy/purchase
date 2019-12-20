@@ -120,7 +120,6 @@ export default {
     searchSelect: {
       handler: function (newValue) {
         if (newValue === '用户') {
-          console.log(1)
           setTimeout(() => {
             this.search()
           }, 500)

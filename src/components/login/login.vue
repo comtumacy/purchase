@@ -145,12 +145,11 @@ export default {
             }
           })
             .then(res => {
-              console.log(res)
               if (res.status === 201) {
                 this.$message.success('登录成功，即将进入系统')
                 this.$store.dispatch('token_actions', res.data.token)
                 this.$store.dispatch('account_actions', this.ruleForm.account)
-                console.log(res.data.token)
+                // console.log(res.data.token)
                 this.$store.dispatch('username_actions', res.data.nickname)
                 this.$store.dispatch('isSuper_actions', res.data.auth)
                 setTimeout(() => {
