@@ -90,6 +90,7 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    // 获取验证码
     getCaptchaImg () {
       this.$axios({
         method: 'post',
@@ -101,12 +102,14 @@ export default {
         this.$message.error('获取验证码图片失败，请检查你的网络连接')
       })
     },
+    // 刷新验证码
     refreshCaptchaImg () {
       this.getCaptchaImg()
       setTimeout(() => {
         this.$message.info('刷新验证码')
       }, 1000)
     },
+    // 动态布局
     getLength () {
       let widthNow = document.documentElement.clientWidth
       let heightNow = document.documentElement.clientHeight
@@ -127,12 +130,15 @@ export default {
         this.registerHeight = height
       }
     },
+    // 获取主页背景图片
     getLoginJpg () {
       return require('./login.jpg')
     },
+    // 获取LOGO图片
     getLogo () {
       return require('./logo.jpg')
     },
+    // 提交按钮事件
     submitForm () {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -170,9 +176,11 @@ export default {
         }
       })
     },
+    // 打开注册框
     openRegister () {
       this.registerSign = true
     },
+    // 关闭注册框
     closeRegister () {
       this.registerSign = false
     }
