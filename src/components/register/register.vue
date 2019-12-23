@@ -97,25 +97,16 @@ export default {
             }
           })
             .then(res => {
-              console.log(res)
-              if (res.status === 201) {
-                this.$message.success('登录成功，即将返回主页')
-                // this.$store.dispatch('token_actions', res.headers.token)
-                // this.$store.dispatch('username_actions', res.headers.username)
-                // setTimeout(() => {
-                //   this.$router.push('/')
-                // }, 1000)
-              } else if (res.status === 400) {
-                if (res.data.msg.account) {
-                  this.$message.error(res.data.msg.account[0])
-                } else {
-                  this.$message.error('密码错误')
-                }
+              if (res.data.error_code === 0) {
+                this.$message.success('注册成功')
+              } else if (res.data.error_code === 1006) {
+                this.$message.success('昵称已存在或邮箱已存在')
+              } else if (res.data.error_code === 1001) {
+                this.$message.success('邮箱格式不正确')
               } else {
-                this.$message.error('密码错误')
+                this.$message.success('未知错误')
               }
             })
-          console.log(this.ruleForm.content)
         } else {
           setTimeout(() => {
             this.$message.error('输入错误，请再次检查您输入的内容')
